@@ -1,0 +1,3 @@
+## 1. Wrong parts of subsystems showing up
+* Since the 3D Models were taken from third-party websites, the meshes are not always labelled neatly, because of that, wrong parts were showing up in the wrong subsystems initially.
+* Built a Shift + Click raycaster tool using which I could alter the visibility of every part in every subsystem myself which would be saved in localStorage, then exported the saved localStorage fixes from my browser console and put them into PERMANENT_OVERRIDES in script.js so everyone would see the correct view.

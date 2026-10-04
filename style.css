@@ -1,0 +1,363 @@
+:root {
+  /* Default: Fallout: New Vegas Desert Amber Phosphor */
+  --pip-color: #ffb642;
+  --pip-glow: rgba(255, 182, 66, 0.55);
+  --pip-dim: rgba(255, 182, 66, 0.22);
+  --pip-bg: rgba(18, 13, 6, 0.82);
+}
+
+body.pip-green {
+  /* Toggle Option: Classic Fallout 3 / 4 Pip-Boy Green Phosphor */
+  --pip-color: #26ff80;
+  --pip-glow: rgba(38, 255, 128, 0.55);
+  --pip-dim: rgba(38, 255, 128, 0.22);
+  --pip-bg: rgba(6, 18, 10, 0.82);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Share Tech Mono', monospace;
+  user-select: none;
+}
+
+body {
+  overflow: hidden;
+  background: #0d0a06;
+  color: var(--pip-color);
+  height: 100vh;
+  width: 100vw;
+  text-shadow: 0 0 6px var(--pip-glow);
+}
+
+/* 3D Viewport with Subtle Retro CRT Monitor Color Grade */
+#canvas-container {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  filter: contrast(1.12) brightness(0.95) saturate(0.88) sepia(0.18);
+  transition: filter 0.3s ease;
+}
+
+body.pip-green #canvas-container {
+  filter: contrast(1.14) brightness(0.92) saturate(0.75) hue-rotate(35deg);
+}
+
+/* CRT Scanlines, Curved Tube Bezel Shadow & Rolling Refresh Beam */
+.crt-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  /* Crisp Horizontal CRT Scanlines + Subtle RGB Phosphor Grid */
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.38) 0px,
+      rgba(0, 0, 0, 0.38) 1px,
+      transparent 1px,
+      transparent 3px
+    ),
+    radial-gradient(
+      circle at center,
+      transparent 58%,
+      rgba(0, 0, 0, 0.78) 100%
+    );
+  box-shadow: inset 0 0 70px rgba(0, 0, 0, 0.85), inset 0 0 18px var(--pip-dim);
+}
+
+/* Rolling Horizontal CRT Scan Bar */
+.crt-scanline-bar {
+  width: 100%;
+  height: 90px;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    var(--pip-dim) 50%,
+    transparent 100%
+  );
+  opacity: 0.22;
+  animation: crtRoll 7s linear infinite;
+}
+
+@keyframes crtRoll {
+  0% { transform: translateY(-100px); }
+  100% { transform: translateY(105vh); }
+}
+
+/* Top RobCo Termlink Bar */
+.top-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 28px;
+  border-bottom: 1.5px solid var(--pip-dim);
+  background: linear-gradient(180deg, rgba(10, 8, 4, 0.85) 0%, transparent 100%);
+  pointer-events: none;
+}
+
+.brand, .hint-group, .model-switcher {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  pointer-events: auto;
+}
+
+.terminal-bracket {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--pip-color);
+}
+
+.brand-title {
+  font-size: 14px;
+  letter-spacing: 2.5px;
+  color: var(--pip-color);
+  text-transform: uppercase;
+}
+
+/* Fallout Tab Switcher for Motorcycles */
+.model-switcher {
+  background: var(--pip-bg);
+  border: 1.5px solid var(--pip-color);
+  padding: 3px;
+  box-shadow: 0 0 12px var(--pip-dim);
+}
+
+.bike-btn, .phosphor-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--pip-color);
+  padding: 6px 14px;
+  font-size: 13px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  text-shadow: 0 0 6px var(--pip-glow);
+  transition: all 0.15s ease;
+}
+
+.bike-btn.active, .bike-btn:hover, .phosphor-btn:hover {
+  background: var(--pip-color);
+  color: #0d0a06;
+  text-shadow: none;
+  font-weight: 700;
+  box-shadow: 0 0 14px var(--pip-glow);
+}
+
+.phosphor-btn {
+  background: var(--pip-bg);
+  border: 1.5px solid var(--pip-color);
+}
+
+.hint {
+  font-size: 12px;
+  letter-spacing: 1px;
+  background: var(--pip-bg);
+  border: 1px solid var(--pip-dim);
+  padding: 6px 10px;
+}
+
+/* Left-Side Vertical V.A.T.S. Targeting Dock */
+.bottom-dock {
+  position: fixed;
+  left: 28px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 175px;
+}
+
+.dock-header {
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  padding-bottom: 4px;
+  border-bottom: 1.5px solid var(--pip-color);
+  margin-bottom: 2px;
+}
+
+.dock-card {
+  width: 100%;
+  background: var(--pip-bg);
+  border: 1.5px solid var(--pip-color);
+  color: var(--pip-color);
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  cursor: pointer;
+  text-shadow: 0 0 6px var(--pip-glow);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.6), inset 0 0 8px var(--pip-dim);
+  transition: all 0.15s steps(2);
+}
+
+.vats-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+
+.vats-pct {
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+/* Pip-Boy CND (Condition) Meter inside each V.A.T.S. card */
+.cnd-bar {
+  width: 100%;
+  height: 5px;
+  background: rgba(0, 0, 0, 0.65);
+  border: 1px solid var(--pip-color);
+  padding: 1px;
+}
+
+.cnd-bar span {
+  display: block;
+  height: 100%;
+  background: var(--pip-color);
+  box-shadow: 0 0 6px var(--pip-glow);
+}
+
+.dock-card:hover {
+  transform: translateX(4px);
+  box-shadow: 0 0 16px var(--pip-glow);
+}
+
+/* Inverted Pip-Boy Highlight when V.A.T.S. Subsystem is Locked */
+.dock-card.active {
+  background: var(--pip-color);
+  color: #0d0a06;
+  text-shadow: none;
+  font-weight: 700;
+  box-shadow: 0 0 22px var(--pip-glow);
+}
+
+.dock-card.active .cnd-bar {
+  border-color: #0d0a06;
+  background: rgba(13, 10, 6, 0.25);
+}
+
+.dock-card.active .cnd-bar span {
+  background: #0d0a06;
+  box-shadow: none;
+}
+
+/* Right-Side Thinner Vertical Pip-Boy Zoom Gauge */
+.zoom-control {
+  position: fixed;
+  right: 28px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  background: var(--pip-bg);
+  padding: 10px 4px;
+  border: 1.5px solid var(--pip-color);
+  box-shadow: 0 0 12px var(--pip-dim);
+}
+
+.zoom-label {
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+
+.zoom-icon {
+  background: none;
+  border: none;
+  color: var(--pip-color);
+  font-size: 13px;
+  cursor: pointer;
+  text-shadow: 0 0 6px var(--pip-glow);
+}
+
+.zoom-icon:hover {
+  transform: scale(1.15);
+}
+
+.slider-wrapper {
+  height: 160px;
+  width: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#zoom-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 160px;
+  height: 1.5px;
+  background: var(--pip-color);
+  transform: rotate(90deg);
+  cursor: pointer;
+  outline: none;
+  box-shadow: 0 0 6px var(--pip-glow);
+}
+
+#zoom-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 6px;
+  background: var(--pip-color);
+  border: 1px solid #0d0a06;
+  box-shadow: 0 0 10px var(--pip-glow);
+  cursor: grab;
+}
+
+/* Bottom Pip-Boy Telemetry Footer Bar */
+.status-pill {
+  position: fixed;
+  bottom: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  background: var(--pip-bg);
+  border: 1.5px solid var(--pip-color);
+  padding: 8px 18px;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  font-size: 13px;
+  letter-spacing: 1px;
+  pointer-events: none;
+  white-space: nowrap;
+  box-shadow: 0 0 16px rgba(0, 0, 0, 0.7), inset 0 0 10px var(--pip-dim);
+}
+
+.pip-stat {
+  padding: 2px 8px;
+  border: 1px solid var(--pip-color);
+  font-size: 12px;
+}
+
+.status-pill strong {
+  text-transform: uppercase;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .top-bar { padding: 12px 14px; flex-wrap: wrap; gap: 8px; }
+  .hint, .status-pill span#status-desc, .pip-stat { display: none; }
+  .bottom-dock { left: 12px; width: 130px; gap: 8px; }
+  .vats-row { font-size: 12px; }
+  .zoom-control { right: 12px; }
+  .slider-wrapper, #zoom-slider { height: 115px; width: 115px; }
+}

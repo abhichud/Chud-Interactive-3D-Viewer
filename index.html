@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3D Showcase</title>
+  <!-- Retro Terminal Monospace Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+<body>
+  <!-- 3D WebGL Viewport -->
+  <div id="canvas-container"></div>
+
+  <!-- CRT Monitor Scanlines, Flicker & Curved Tube Vignette -->
+  <div class="crt-overlay" aria-hidden="true">
+    <div class="crt-scanline-bar"></div>
+  </div>
+
+  <!-- Top Header Bar -->
+  <header class="top-bar">
+    <div class="brand">
+      <span class="terminal-bracket">[</span>
+      <span class="brand-title">3D SHOWCASE</span>
+      <span class="terminal-bracket">]</span>
+    </div>
+
+    <!-- Multiple Motorcycle Switcher -->
+    <div class="model-switcher">
+      <button class="bike-btn active" data-model="bike1.glb" data-name="BMW S1000RR">BMW S1000RR</button>
+      <button class="bike-btn" data-model="bike2.glb" data-name="Honda CBR650R">Honda CBR650R</button>
+    </div>
+
+    <!-- Phosphor Color Toggle (Amber / Green) & Rotate Hint -->
+    <div class="hint-group">
+      <button id="phosphor-btn" class="phosphor-btn" type="button">[ HUD: AMBER ]</button>
+      <div class="hint">
+        <span>DRAG: ORBIT // SHIFT+CLICK: REASSIGN</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Left-Side Vertical Subsystem Menu -->
+  <nav class="bottom-dock">
+    <button class="dock-card" data-part="engine">
+      <div class="vats-row">
+        <span>ENGINE</span>
+      </div>
+      <div class="cnd-bar"><span style="width: 92%"></span></div>
+    </button>
+
+    <button class="dock-card" data-part="transmission">
+      <div class="vats-row">
+        <span>TRANSMISSION</span>
+      </div>
+      <div class="cnd-bar"><span style="width: 85%"></span></div>
+    </button>
+
+    <button class="dock-card" data-part="chassis">
+      <div class="vats-row">
+        <span>CHASSIS</span>
+      </div>
+      <div class="cnd-bar"><span style="width: 96%"></span></div>
+    </button>
+
+    <button class="dock-card" data-part="wheels">
+      <div class="vats-row">
+        <span>WHEELS</span>
+      </div>
+      <div class="cnd-bar"><span style="width: 90%"></span></div>
+    </button>
+  </nav>
+
+  <!-- Right-Side Thinner Vertical Zoom Gauge -->
+  <aside class="zoom-control">
+    <span class="zoom-label">MAG</span>
+    <button class="zoom-icon" id="zoom-in" aria-label="Zoom in">[+]</button>
+    <div class="slider-wrapper">
+      <input type="range" id="zoom-slider" min="1.5" max="7.5" step="0.1" value="4.8" />
+    </div>
+    <button class="zoom-icon" id="zoom-out" aria-label="Zoom out">[-]</button>
+  </aside>
+
+  <!-- Bottom Telemetry Status Footer Bar -->
+  <div class="status-pill" id="status-pill">
+    <span class="pip-stat">CND 100%</span>
+    <strong id="status-title">BMW S1000RR — Full View</strong>
+    <span id="status-desc">Select a subsystem on the left to isolate components</span>
+    <span class="pip-stat">AP 110/110</span>
+  </div>
+
+  <!-- Tiny inline script for switching between Amber and Green HUD -->
+  <script>
+    const phosphorBtn = document.getElementById('phosphor-btn');
+    phosphorBtn.addEventListener('click', () => {
+      document.body.classList.toggle('pip-green');
+      const isGreen = document.body.classList.contains('pip-green');
+      phosphorBtn.textContent = isGreen ? '[ HUD: GREEN ]' : '[ HUD: AMBER ]';
+    });
+  </script>
+  <script type="module" src="script.js"></script>
+</body>
+</html>
